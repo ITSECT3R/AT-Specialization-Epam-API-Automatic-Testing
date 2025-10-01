@@ -5,7 +5,7 @@ import {
   adminCredentials
 } from "../data/data"; 
 
-import { BookingService } from "../buisness/services/Booking.service";
+import { BookingService } from "../business/services/booking.service";
 
 let token: string;
 let testBookingId: number;
