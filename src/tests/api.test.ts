@@ -5,30 +5,37 @@ import {
   adminCredentials
 } from "../data/data"; 
 
-import { client } from "../buisness/client/client";
+import { BookingService } from "../buisness/services/Booking.service";
 
 let token: string;
 let testBookingId: number;
 
 describe('Restful Booker API Tests', () => {
-  
+
+  let bookingService: BookingService;
+
   beforeAll(async () => {
+    bookingService = new BookingService();
     // Simple way to get POST method
-    token = await client.post.createToken(
+    token = await bookingService.createToken(
       adminCredentials.username, 
       adminCredentials.password
     );
+
     expect(token).toBeDefined();
   });
 
   it('should ping the API successfully', async () => {
-    const pingResponse = await client.ping.pingApi();
+    const bookingService = new BookingService();
+    const pingResponse = await bookingService.pingApi();
+
     expect(pingResponse).toBe(201);
   });
 
   it('should create a new booking and validate response', async () => {
-    // Step 1: Create fresh booking
-    const response = await client.post.createBooking(testData.newBooking);
+    const bookingService = new BookingService();
+    // Step 1: Create a new booking
+    const response = await bookingService.createBooking(testData.newBooking);
     testBookingId = response.bookingid;
     
     // Step 2: Validate response structure with Joi
@@ -44,8 +51,9 @@ describe('Restful Booker API Tests', () => {
   });
 
   it('should get new booking ID created in previous test and validate response', async () => {
-    const booking = await client.get.getSpecificBookingId(testBookingId);
-    
+    const bookingService = new BookingService();
+    const booking = await bookingService.getSpecificBookingId(testBookingId);
+
     // Validate response structure
     const { error } = bookingDataSchema.validate(booking);
     expect(error).toBeUndefined();
@@ -57,8 +65,9 @@ describe('Restful Booker API Tests', () => {
 
 
   it('should update a booking completely', async () => {
+    const bookingService = new BookingService();
     // Use the booking created in previous test
-    const updatedResponse = await client.put.updateBooking(
+    const updatedResponse = await bookingService.updateBooking(
       testBookingId, 
       testData.updatedBooking, 
       token
@@ -75,8 +84,9 @@ describe('Restful Booker API Tests', () => {
   });
   
   it('should partially update a booking', async () => {
+    const bookingService = new BookingService();
     // Partial update using PATCH
-    const partialResponse = await client.put.updatePartialBooking(
+    const partialResponse = await bookingService.updatePartialBooking(
       testBookingId,
       testData.partialUpdateBooking,
       token
@@ -90,14 +100,17 @@ describe('Restful Booker API Tests', () => {
   });
 
   it('should delete a booking', async () => {
-    const deleteStatus = await client.delete.deleteBooking(testBookingId, token);
+    const bookingService = new BookingService();
+    // Delete the booking created in previous tests
+    const deleteStatus = await bookingService.deleteBooking(testBookingId, token);
     expect(deleteStatus?.status).toBe(201);
   });
 
   // Bonus: Get all booking IDs
     it('should get all booking IDs', async () => {
-    const bookingIds = await client.get.getAllBookingIds();
-    
+    const bookingService = new BookingService();
+    const bookingIds = await bookingService.getAllBookingIds();
+
     expect(Array.isArray(bookingIds)).toBe(true);
     expect(bookingIds.length).toBeGreaterThan(0);
     

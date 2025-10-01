@@ -1,59 +1,27 @@
-import { createToken } from "../services/create-token.service";
-import { createBooking } from "../services/createBooking.service";
-import { deleteBooking } from "../services/deleteBooking.service";
-import { getAllBookingIds } from "../services/getAllBookingIds.service";
-import { getSpecificBookingId } from "../services/getSpecificBookingId.service";
-import { updateBooking } from "../services/updateBooking.service";
-import { updatePartialBooking } from "../services/updatePartialBooking.service";
-import { pingApi } from "../services/pingApi.service";
+import axios from "axios";
 
-class Client {
 
-  protected getMethods = {
-    getAllBookingIds,
-    getSpecificBookingId
-  };
+export class Client {
 
-  protected postMethods = {
-    createBooking,
-    createToken
-  };
+  protected request: any;
 
-  protected putMethods = {
-    updateBooking,
-    updatePartialBooking
-  };
+  constructor(request: any) {
+    this.request = request;
+  }
 
-  protected deleteMethods = {
-    deleteBooking
-  };
+  async get(endPoint: string, header?: object) {
+    return this.request.get(endPoint, header);
+  }
 
-  protected pingMethod = {
-    pingApi
-  };
-  
-  get = {
-    getAllBookingIds: this.getMethods.getAllBookingIds,
-    getSpecificBookingId: this.getMethods.getSpecificBookingId
-  };
+  async post(endPoint: string, payload: object, header?: object) {
+    return this.request.post(endPoint, payload, header);
+  }
 
-  post = {
-    createBooking: this.postMethods.createBooking,
-    createToken: this.postMethods.createToken
-  };
+  async put(endPoint: string, payload: object, header?: object) {
+    return this.request.put(endPoint, payload, header);
+  }
 
-  put = {
-    updateBooking: this.putMethods.updateBooking,
-    updatePartialBooking: this.putMethods.updatePartialBooking
-  };
-
-  delete = {
-    deleteBooking: this.deleteMethods.deleteBooking
-  };
-
-  ping = {
-    pingApi: this.pingMethod.pingApi
-  };
+  async delete(endPoint: string, header?: object) {
+    return this.request.delete(endPoint, header);
+  }
 }
-
-export const client = new Client();
