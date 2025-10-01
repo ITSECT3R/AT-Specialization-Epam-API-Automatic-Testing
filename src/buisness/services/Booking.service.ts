@@ -3,11 +3,6 @@ import { Client } from "../client/client";
 
 export class BookingService extends Client {
 
-
-  constructor() {
-    super(Client);
-  }
-
   async deleteBooking(bookingId: number, token: string) {
   try {
     const response = await this.delete(
@@ -30,7 +25,7 @@ export class BookingService extends Client {
 
   async updatePartialBooking(bookingId: number, updateData: object, token: string) {
   try {
-    const response = await axios.patch(
+    const response = await this.patch(
       `${urls.BASE_URL}/${bookingId}`,
       updateData,
       {
@@ -50,7 +45,7 @@ export class BookingService extends Client {
 
   async updateBooking(bookingId: number, updatedData: object, token: string) {
   try {
-    const response = await axios.put(
+    const response = await this.put(
       `${urls.BASE_URL}/${bookingId}`,
       updatedData,
       {
@@ -70,7 +65,7 @@ export class BookingService extends Client {
 
   async createBooking(bookingData: object) {
   try {
-    const response = await axios.post(
+    const response = await this.post(
       `${urls.BASE_URL}`,
       bookingData,
       {
@@ -89,7 +84,7 @@ export class BookingService extends Client {
   async pingApi() {
   try {
 
-    const response = await axios.get(`${urls.PING_URL}`);
+    const response = await this.get(`${urls.PING_URL}`);
     return response.status;
     
   } catch (error) {
@@ -99,7 +94,7 @@ export class BookingService extends Client {
 
   async getAllBookingIds() {
   try {
-    const response = await axios.get(`${urls.BASE_URL}`);
+    const response = await this.get(`${urls.BASE_URL}`);
 
     return response.data;
     } catch (error) {
@@ -110,7 +105,7 @@ export class BookingService extends Client {
 
   async getSpecificBookingId(bookingId: number) {
   try {
-    const response = await axios.get(`${urls.BASE_URL}/${bookingId}`, {
+    const response = await this.get(`${urls.BASE_URL}/${bookingId}`, {
       headers: {
         Accept: `application/json`
       }
@@ -126,7 +121,7 @@ export class BookingService extends Client {
   async createToken(userName: string, password: string) {
 
     try {
-      const response = await axios.post(`${urls.AUTH_URL}`, {
+      const response = await this.post(`${urls.AUTH_URL}`, {
         username: userName,
         password: password
       });
@@ -137,5 +132,4 @@ export class BookingService extends Client {
       throw new Error(`Error creating token: ${error}`);
     }
   }
-  
 }
