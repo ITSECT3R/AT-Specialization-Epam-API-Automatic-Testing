@@ -7,6 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:html": "jest --reporters=jest-html-reporters",
     "api-test": "jest src/tests/api.test.ts"
   },
   "keywords": [
@@ -26,6 +27,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.5.2",
     "jest": "^30.1.3",
+    "jest-html-reporters": "^3.1.7",
     "ts-jest": "^29.4.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
