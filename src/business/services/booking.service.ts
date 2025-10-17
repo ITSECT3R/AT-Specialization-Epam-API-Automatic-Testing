@@ -19,7 +19,7 @@ export class BookingService extends Client {
     return response;
     
     } catch (error) {
-      console.error(`Error deleting booking ID ${bookingId}:`, error);
+      throw new Error(`Error deleting booking ID ${bookingId}: ${error}`);
     }
   }
 
@@ -39,7 +39,7 @@ export class BookingService extends Client {
     return response.data;
 
     } catch (error) {
-      console.error(`Error updating booking ID ${bookingId}:`, error);
+      throw new Error(`Error updating booking ID ${bookingId}: ${error}`);
     }
   }
 
@@ -59,7 +59,7 @@ export class BookingService extends Client {
     return response.data;
     
     } catch (error) {
-      console.error(`Error updating booking ID ${bookingId}:`, error);
+      throw new Error(`Error updating booking ID ${bookingId}: ${error}`);
     }
   }
 
@@ -77,9 +77,9 @@ export class BookingService extends Client {
     );
       return response.data;
     } catch (error) {
-      console.error('Error creating booking:', error);
+      throw new Error(`Error creating booking: ${error}`);
     }
-  };
+  }
 
   async pingApi() {
   try {
@@ -98,8 +98,7 @@ export class BookingService extends Client {
 
     return response.data;
     } catch (error) {
-      console.error(`Error fetching booking IDs:`, error);
-      throw error;
+      throw new Error(`Error fetching booking IDs: ${error}`);
     }
   }
 
@@ -114,16 +113,16 @@ export class BookingService extends Client {
     return response.data;
     
     } catch (error) {
-      console.error(`Error fetching specific booking ID:`, error);
+      throw new Error(`Error fetching specific booking ID: ${error}`);
     }
   }
 
-  async createToken(userName: string, password: string) {
+  async createToken(userName: string, newPassword: string) {
 
     try {
       const response = await this.post(`${urls.AUTH_URL}`, {
         username: userName,
-        password: password
+        password: newPassword
       });
 
       return response.data.token;
