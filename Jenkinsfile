@@ -3,16 +3,31 @@ pipeline {
     
     environment {
         NODE_ENV = 'test'
-    }
-    
-    tools {
-        nodejs 'NodeJS'
+        PATH = "$PATH:/usr/local/bin"
     }
     
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+        
+        stage('Setup Node.js') {
+            steps {
+                script {
+                    // Check if Node.js is available
+                    def nodeVersion = sh(script: 'node --version || echo "not found"', returnStdout: true).trim()
+                    if (nodeVersion == "not found") {
+                        // Install Node.js using NodeSource repository (for Ubuntu/Debian)
+                        sh '''
+                            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                            sudo apt-get install -y nodejs
+                        '''
+                    }
+                    echo "Node.js version: ${sh(script: 'node --version', returnStdout: true).trim()}"
+                    echo "npm version: ${sh(script: 'npm --version', returnStdout: true).trim()}"
+                }
             }
         }
         
