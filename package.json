@@ -1,6 +1,7 @@
 {
   "name": "api-testing-restful-booker",
   "version": "1.0.0",
+  "type": "module",
   "description": "API testing project for Restful Booker using TypeScript, Axios, and Joi. EPAM Systems project.",
   "main": "index.js",
   "scripts": {
