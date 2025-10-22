@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 // Joi schemas for validation
 export const bookingResponseSchema = Joi.object({
@@ -10,10 +10,10 @@ export const bookingResponseSchema = Joi.object({
     depositpaid: Joi.boolean().required(),
     bookingdates: Joi.object({
       checkin: Joi.string().required(),
-      checkout: Joi.string().required()
+      checkout: Joi.string().required(),
     }).required(),
-    additionalneeds: Joi.string().allow('').optional()
-  }).required()
+    additionalneeds: Joi.string().allow('').optional(),
+  }).required(),
 });
 
 export const bookingDataSchema = Joi.object({
@@ -23,22 +23,22 @@ export const bookingDataSchema = Joi.object({
   depositpaid: Joi.boolean().required(),
   bookingdates: Joi.object({
     checkin: Joi.string().required(),
-    checkout: Joi.string().required()
+    checkout: Joi.string().required(),
   }).required(),
-  additionalneeds: Joi.string().allow('').optional()
+  additionalneeds: Joi.string().allow('').optional(),
 });
 
 export const testData = {
   newBooking: {
     firstname: 'bruce',
-    lastname: 'wayne',        
-    totalprice: 150,           
-    depositpaid: true,         
-    bookingdates: {           
+    lastname: 'wayne',
+    totalprice: 150,
+    depositpaid: true,
+    bookingdates: {
       checkin: '2023-10-01',
-      checkout: '2023-10-10'
+      checkout: '2023-10-10',
     },
-    additionalneeds: 'Bottles of water' 
+    additionalneeds: 'Bottles of water',
   },
   updatedBooking: {
     firstname: 'clark',
@@ -47,23 +47,23 @@ export const testData = {
     depositpaid: false,
     bookingdates: {
       checkin: '2023-11-01',
-      checkout: '2023-11-15'
+      checkout: '2023-11-15',
     },
-    additionalneeds: 'Breakfast'
+    additionalneeds: 'Breakfast',
   },
   partialUpdateBooking: {
     firstname: 'diana',
-    lastname: 'prince'
-  }
-}
+    lastname: 'prince',
+  },
+};
 
 export const urls = {
   BASE_URL: 'https://restful-booker.herokuapp.com/booking',
   AUTH_URL: 'https://restful-booker.herokuapp.com/auth',
-  PING_URL: 'https://restful-booker.herokuapp.com/ping'
-}
+  PING_URL: 'https://restful-booker.herokuapp.com/ping',
+};
 
 export const adminCredentials = {
   username: 'admin',
-  password: 'password123'
-}
+  password: 'password123',
+};
